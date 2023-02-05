@@ -1,0 +1,33 @@
+.modalTaskContainer {
+  visibility: hidden;
+  opacity: 0;
+  display: flex;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  top: 0;
+  transition: visibility 0.2s linear, opacity 0.2s linear;
+  width: 100%;
+  height: 100vh;
+  z-index: 9000;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.modalTaskContainer.open {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modalTaskContainer__content {
+  width: 100%;
+  max-width: 450px;
+  height: 250px;
+  margin: 15% auto;
+  background-color: #fff;
+  border-radius: 15px;
+  animation-duration: 0.4s;
+  padding: 40px;
+  display: grid;
+  grid-template-rows: 50px auto 70px;
+}

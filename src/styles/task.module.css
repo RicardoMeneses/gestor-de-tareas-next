@@ -13,7 +13,17 @@
   padding: 20px 40px;
   color: #fff;
   line-height: 20px;
-  /* background-image: linear-gradient(to right top, #223705, #335f12, #3d8b23, #3bb93b, #12eb5a); */
+}
+
+.complete {
+  background-image: linear-gradient(
+    to right top,
+    #223705,
+    #335f12,
+    #3d8b23,
+    #3bb93b,
+    #12eb5a
+  );
 }
 
 .taskContainer__title {

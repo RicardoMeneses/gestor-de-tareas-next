@@ -33,6 +33,7 @@ img {
 
 main {
   padding: 120px 150px 60px;
+  height: 100vh;
 }
 
 @media (max-width: 768px) {
