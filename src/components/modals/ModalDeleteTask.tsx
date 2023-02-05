@@ -1,4 +1,4 @@
-import styles from "@/styles/modal-delete-task.module.css";
+import styles from "../../styles/modal-delete-task.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWarning } from "@fortawesome/free-solid-svg-icons";
 import api from "@/services/api";

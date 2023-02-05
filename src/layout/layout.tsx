@@ -1,11 +1,15 @@
-import { AppProps } from "next/app";
 import Header from "./Header";
+import { GlobalsProvider } from "@/providers/globals";
 
-export default function withLayout({ children }: any) {
+const withLayout = ({ children }: any) => {
   return (
     <>
-      <Header />
-      <main>{children}</main>
+      <GlobalsProvider>
+        <Header />
+        <main>{children}</main>
+      </GlobalsProvider>
     </>
   );
-}
+};
+
+export default withLayout;
