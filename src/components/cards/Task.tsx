@@ -4,11 +4,13 @@ import {
   faEye,
   faCheck,
   faClose,
+  faEdit,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "../../styles/task.module.css";
 import ModalSeeTask from "../modals/ModalSeeTask";
 import api from "@/services/api";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 
 interface Props {
@@ -29,8 +31,10 @@ interface TaskData {
 }
 
 const Task: React.FC<Props> = ({ title, dueDate, isComplete, id }) => {
+  const ref = useRef<HTMLInputElement>(null);
   const [seeTask, setSeeTask] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [clickMenu, setClickMenu] = useState(false);
   const [singleTask, setSingleTask] = useState<TaskData>({
     id: 0,
     title: "",
@@ -44,6 +48,10 @@ const Task: React.FC<Props> = ({ title, dueDate, isComplete, id }) => {
   };
   const closeSeeTask = () => {
     setSeeTask(false);
+  };
+
+  const openMenu = () => {
+    setClickMenu(true);
   };
 
   const updateTask = async () => {
@@ -71,6 +79,11 @@ const Task: React.FC<Props> = ({ title, dueDate, isComplete, id }) => {
   };
 
   useEffect(() => {
+    const handleClickOutside = (event: { target: any }) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setClickMenu && setClickMenu(false);
+      }
+    };
     api.defaults.headers.authorization = `Bearer e864a0c9eda63181d7d65bc73e61e3dc6b74ef9b82f7049f1fc7d9fc8f29706025bd271d1ee1822b15d654a84e1a0997b973a46f923cc9977b3fcbb064179ecd`;
     api
       .get(`https://ecsdevapi.nextline.mx/vdev/tasks-challenge/tasks/${id}`)
@@ -80,6 +93,10 @@ const Task: React.FC<Props> = ({ title, dueDate, isComplete, id }) => {
       .catch((err) => {
         console.log(err, "error");
       });
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
   }, [id]);
 
   return (
@@ -94,7 +111,23 @@ const Task: React.FC<Props> = ({ title, dueDate, isComplete, id }) => {
         <FontAwesomeIcon
           icon={faEllipsisV}
           className={styles.taskContainer__menu}
+          onClick={openMenu}
         />
+        <div
+          ref={ref}
+          className={`${styles.taskContainer__menuContainer} ${
+            clickMenu ? styles.displayMenu : ""
+          }`}
+        >
+          <div className={styles.taskContainer__menuContainer__item}>
+            <FontAwesomeIcon icon={faEdit} />
+            <p>Editar</p>
+          </div>
+          <div className={styles.taskContainer__menuContainer__item}>
+            <FontAwesomeIcon icon={faTrash} />
+            <p>Eliminar</p>
+          </div>
+        </div>
         <FontAwesomeIcon
           onClick={openSeeTask}
           icon={faEye}
