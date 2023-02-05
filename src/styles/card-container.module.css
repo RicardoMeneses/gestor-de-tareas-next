@@ -1,0 +1,16 @@
+.cardContainer {
+  background-color: #fff;
+  flex: 1;
+  border-radius: 10px;
+  padding: 10px 50px;
+}
+
+.cardContainer__title {
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .cardContainer {
+    flex: 100%;
+  }
+}
