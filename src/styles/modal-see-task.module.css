@@ -19,15 +19,78 @@
   opacity: 1;
 }
 
+.modalTaskContainer__content.complete {
+  background-image: linear-gradient(
+    to right top,
+    #223705,
+    #335f12,
+    #3d8b23,
+    #3bb93b,
+    #12eb5a
+  );
+}
+
+.modalTaskContainer__content.incomplete {
+  background-image: linear-gradient(
+    to right top,
+    #37052c,
+    #600741,
+    #8c0651,
+    #bb065d,
+    #eb1262
+  );
+}
+
+.modalTaskContainer__close {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
 .modalTaskContainer__content {
   width: 100%;
   max-width: 450px;
-  height: 250px;
+  min-height: 250px;
   margin: 15% auto;
   background-color: #fff;
   border-radius: 15px;
   animation-duration: 0.4s;
-  padding: 40px;
-  display: grid;
-  grid-template-rows: 50px auto 70px;
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+}
+
+.modalTaskContainer__header {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 10px;
+  line-height: 20px;
+  position: relative;
+}
+
+.modalTaskContainer__title {
+  margin: 0;
+  font-weight: 700;
+}
+
+.modalTaskContainer__date {
+  margin: 0;
+  font-size: 14px;
+}
+
+.modalTaskContainer__comments {
+  margin: 0;
+  font-size: 14px;
+}
+
+.modalTaskContainer__tags {
+  font-size: 14px;
+  border: 1px solid #fff;
+  width: fit-content;
+  border-radius: 10px;
+  padding: 3px 8px;
 }

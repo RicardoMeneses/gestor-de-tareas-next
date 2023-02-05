@@ -25,6 +25,7 @@ const Container: React.FC<Props> = ({ title, tasks }) => {
             title={task.title}
             dueDate={task.due_date}
             isComplete={task.is_completed}
+            id={`${task.id}`}
             key={task.id}
           />
         ))}
