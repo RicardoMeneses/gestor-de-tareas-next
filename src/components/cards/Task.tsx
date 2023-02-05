@@ -1,9 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisV, faEye, faCheck } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEllipsisV,
+  faEye,
+  faCheck,
+  faClose,
+} from "@fortawesome/free-solid-svg-icons";
 import styles from "../../styles/task.module.css";
 import ModalSeeTask from "../modals/ModalSeeTask";
-import { useEffect, useState } from "react";
 import api from "@/services/api";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 interface Props {
   title: string;
@@ -24,17 +30,44 @@ interface TaskData {
 
 const Task: React.FC<Props> = ({ title, dueDate, isComplete, id }) => {
   const [seeTask, setSeeTask] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [singleTask, setSingleTask] = useState<TaskData>({
     id: 0,
     title: "",
     is_completed: 0,
   });
 
+  const router = useRouter();
+
   const openSeeTask = () => {
     setSeeTask(true);
   };
   const closeSeeTask = () => {
     setSeeTask(false);
+  };
+
+  const updateTask = async () => {
+    setLoading(true);
+    const params = new URLSearchParams();
+    params.append("title", singleTask.title);
+    params.append("comments", singleTask.comments || "");
+    params.append("description", singleTask.description || "");
+    params.append("tags", singleTask.tags || "");
+    params.append("is_completed", `${singleTask.is_completed ? "0" : "1"}`);
+    if (singleTask.due_date) params.append("due_date", singleTask.due_date);
+    await api.put(
+      `https://ecsdevapi.nextline.mx/vdev/tasks-challenge/tasks/${singleTask.id}`,
+      params,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+    router.push("/");
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   };
 
   useEffect(() => {
@@ -68,7 +101,8 @@ const Task: React.FC<Props> = ({ title, dueDate, isComplete, id }) => {
           className={styles.taskContainer__view}
         />
         <FontAwesomeIcon
-          icon={faCheck}
+          onClick={updateTask}
+          icon={isComplete ? faClose : faCheck}
           className={styles.taskContainer__action}
         />
       </div>
@@ -77,6 +111,7 @@ const Task: React.FC<Props> = ({ title, dueDate, isComplete, id }) => {
         task={singleTask}
         closeModal={closeSeeTask}
       />
+      <div className={`${loading ? styles.loading : ""}`}></div>
     </>
   );
 };
