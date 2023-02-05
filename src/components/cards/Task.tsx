@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import styles from "../../styles/task.module.css";
 import ModalSeeTask from "../modals/ModalSeeTask";
+import ModalDeleteTask from "../modals/ModalDeleteTask";
 import api from "@/services/api";
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
@@ -33,6 +34,7 @@ interface TaskData {
 const Task: React.FC<Props> = ({ title, dueDate, isComplete, id }) => {
   const ref = useRef<HTMLInputElement>(null);
   const [seeTask, setSeeTask] = useState(false);
+  const [openDeleteTask, setOpenDeleteTask] = useState(false);
   const [loading, setLoading] = useState(false);
   const [clickMenu, setClickMenu] = useState(false);
   const [singleTask, setSingleTask] = useState<TaskData>({
@@ -49,7 +51,12 @@ const Task: React.FC<Props> = ({ title, dueDate, isComplete, id }) => {
   const closeSeeTask = () => {
     setSeeTask(false);
   };
-
+  const openModalDeleteTask = () => {
+    setOpenDeleteTask(true);
+  };
+  const closeModalDeleteTask = () => {
+    setOpenDeleteTask(false);
+  };
   const openMenu = () => {
     setClickMenu(true);
   };
@@ -123,7 +130,10 @@ const Task: React.FC<Props> = ({ title, dueDate, isComplete, id }) => {
             <FontAwesomeIcon icon={faEdit} />
             <p>Editar</p>
           </div>
-          <div className={styles.taskContainer__menuContainer__item}>
+          <div
+            className={styles.taskContainer__menuContainer__item}
+            onClick={openModalDeleteTask}
+          >
             <FontAwesomeIcon icon={faTrash} />
             <p>Eliminar</p>
           </div>
@@ -143,6 +153,11 @@ const Task: React.FC<Props> = ({ title, dueDate, isComplete, id }) => {
         open={seeTask}
         task={singleTask}
         closeModal={closeSeeTask}
+      />
+      <ModalDeleteTask
+        open={openDeleteTask}
+        id={`${singleTask.id}`}
+        closeModal={closeModalDeleteTask}
       />
       <div className={`${loading ? styles.loading : ""}`}></div>
     </>
