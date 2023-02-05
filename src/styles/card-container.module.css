@@ -1,8 +1,17 @@
 .cardContainer {
   background-color: #fff;
   flex: 1;
-  border-radius: 10px;
-  padding: 10px 50px;
+  border-radius: 20px;
+  padding: 10px 80px;
+  box-shadow: -4px 7px 9px -2px rgba(0, 0, 0, 0.7);
+  max-height: 660px;
+  overflow: scroll;
+}
+
+.cardContainer__tasksContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .cardContainer__title {
@@ -12,5 +21,13 @@
 @media (max-width: 768px) {
   .cardContainer {
     flex: 100%;
+    max-height: 360px;
+    padding: 10px 40px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 821px) {
+  .cardContainer {
+    padding: 10px 40px;
   }
 }

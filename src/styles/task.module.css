@@ -1,0 +1,53 @@
+.taskContainer {
+  position: relative;
+  border-radius: 10px;
+  min-height: 80px;
+  background-image: linear-gradient(
+    to right top,
+    #37052c,
+    #600741,
+    #8c0651,
+    #bb065d,
+    #eb1262
+  );
+  padding: 20px 40px;
+  color: #fff;
+  line-height: 20px;
+  /* background-image: linear-gradient(to right top, #223705, #335f12, #3d8b23, #3bb93b, #12eb5a); */
+}
+
+.taskContainer__title {
+  margin: 0;
+}
+
+.taskContainer__menu {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  cursor: pointer;
+}
+
+.taskContainer__view {
+  position: absolute;
+  bottom: 12px;
+  right: 50px;
+  cursor: pointer;
+}
+
+.taskContainer__action {
+  position: absolute;
+  bottom: 12px;
+  right: 90px;
+  cursor: pointer;
+}
+
+.taskContainer__date {
+  margin: 0;
+  font-size: 12px;
+}
+
+@media (max-width: 405px) {
+  .taskContainer {
+    padding: 15px 20px;
+  }
+}

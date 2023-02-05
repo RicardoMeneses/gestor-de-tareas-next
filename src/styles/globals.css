@@ -24,8 +24,7 @@ body {
     #00c09f,
     #41c75e
   );
-  background-size: cover;
-  height: 100vh;
+  background-size: contain;
 }
 img {
   max-width: 100%;
@@ -33,5 +32,17 @@ img {
 }
 
 main {
-  padding: 100px 50px 60px;
+  padding: 120px 150px 60px;
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: 120px 50px 60px;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 821px) {
+  main {
+    padding: 120px 50px 60px;
+  }
 }
