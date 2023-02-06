@@ -46,6 +46,10 @@
 
 @media (max-width: 768px) {
   .label {
-    font-size: 10px;
+    font-size: 13px;
+  }
+
+  .radioOptionsContainer {
+    width: 130px;
   }
 }

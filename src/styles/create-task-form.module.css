@@ -84,3 +84,16 @@
   border-radius: 20px;
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  .modalAddTaskContainer {
+    padding: 0 30px;
+    height: auto;
+  }
+  .modalAddTaskContainer__form__grid {
+    flex-direction: column;
+  }
+  .modalAddTaskContainer__content {
+    margin: 10% auto;
+  }
+}
