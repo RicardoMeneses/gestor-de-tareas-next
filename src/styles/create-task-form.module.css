@@ -96,4 +96,7 @@
   .modalAddTaskContainer__content {
     margin: 10% auto;
   }
+  .modalAddTaskContainer__formContainer {
+    gap: 10px;
+  }
 }
