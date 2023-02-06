@@ -2,7 +2,7 @@ import type { ReactElement } from "react";
 import Layout from "../layout/layout";
 import type { NextPageWithLayout } from "./_app";
 import CardContainer from "@/components/cards/Container";
-import styles from "@/styles/home.module.css";
+import styles from "../styles/home.module.css";
 import api from "@/services/api";
 import { GetServerSideProps } from "next";
 
