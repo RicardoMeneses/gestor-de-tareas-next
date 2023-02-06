@@ -13,6 +13,7 @@ import ModalDeleteTask from "../modals/ModalDeleteTask";
 import api from "@/services/api";
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
+import EditTaskForm from "../forms/EditTaskForm";
 
 interface Props {
   title: string;
@@ -34,6 +35,7 @@ interface TaskData {
 const Task: React.FC<Props> = ({ title, dueDate, isComplete, id }) => {
   const ref = useRef<HTMLInputElement>(null);
   const [seeTask, setSeeTask] = useState(false);
+  const [editTask, setEditTask] = useState(false);
   const [openDeleteTask, setOpenDeleteTask] = useState(false);
   const [loading, setLoading] = useState(false);
   const [clickMenu, setClickMenu] = useState(false);
@@ -56,6 +58,12 @@ const Task: React.FC<Props> = ({ title, dueDate, isComplete, id }) => {
   };
   const closeModalDeleteTask = () => {
     setOpenDeleteTask(false);
+  };
+  const openEditTask = () => {
+    setEditTask(true);
+  };
+  const closeEditTask = () => {
+    setEditTask(false);
   };
   const openMenu = () => {
     setClickMenu(true);
@@ -122,7 +130,10 @@ const Task: React.FC<Props> = ({ title, dueDate, isComplete, id }) => {
             clickMenu ? styles.displayMenu : ""
           }`}
         >
-          <div className={styles.taskContainer__menuContainer__item}>
+          <div
+            className={styles.taskContainer__menuContainer__item}
+            onClick={openEditTask}
+          >
             <FontAwesomeIcon icon={faEdit} />
             <p>Editar</p>
           </div>
@@ -154,6 +165,11 @@ const Task: React.FC<Props> = ({ title, dueDate, isComplete, id }) => {
         open={openDeleteTask}
         id={`${singleTask.id}`}
         closeModal={closeModalDeleteTask}
+      />
+      <EditTaskForm
+        open={editTask}
+        closeTask={closeEditTask}
+        task={singleTask}
       />
       <div className={`${loading ? styles.loading : ""}`}></div>
     </>

@@ -12,20 +12,42 @@ import { useRouter } from "next/router";
 interface Props {
   open?: boolean;
   closeTask: () => void;
+  task: Task;
 }
 
-const CreateTaskForm: React.FC<Props> = ({ open, closeTask }) => {
+interface Task {
+  id?: number;
+  title: string;
+  is_completed: number;
+  due_date?: string;
+  description?: string;
+  comments?: string;
+  tags?: string;
+}
+
+const EditTaskForm: React.FC<Props> = ({ open, closeTask, task }) => {
   const router = useRouter();
-  const createTask = async (params: any) => {
-    await fetch(`https://ecsdevapi.nextline.mx/vdev/tasks-challenge/tasks`, {
-      body: params,
-      headers: {
-        Authorization:
-          "Bearer e864a0c9eda63181d7d65bc73e61e3dc6b74ef9b82f7049f1fc7d9fc8f29706025bd271d1ee1822b15d654a84e1a0997b973a46f923cc9977b3fcbb064179ecd",
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      method: "POST",
-    });
+  const initialValues = {
+    title: task.title,
+    is_completed: `${task.is_completed}`,
+    due_date: task.due_date || "",
+    description: task.description || "",
+    comments: task.comments || "",
+    tags: task.tags || "",
+  };
+  const editTask = async (params: any) => {
+    await fetch(
+      `https://ecsdevapi.nextline.mx/vdev/tasks-challenge/tasks/${task.id}?token=ricard_mm`,
+      {
+        body: params,
+        headers: {
+          Authorization:
+            "Bearer e864a0c9eda63181d7d65bc73e61e3dc6b74ef9b82f7049f1fc7d9fc8f29706025bd271d1ee1822b15d654a84e1a0997b973a46f923cc9977b3fcbb064179ecd",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        method: "PUT",
+      }
+    );
     // api.post("/?token=ricardo_mm", params, {
     //   headers: {
     //     "Content-Type": "application/x-www-form-urlencoded",
@@ -38,7 +60,7 @@ const CreateTaskForm: React.FC<Props> = ({ open, closeTask }) => {
     >
       <div className={styles.modalAddTaskContainer__content}>
         <div className={styles.modalAddTaskContainer__header}>
-          <p>Agregar tarea</p>
+          <p>Editar tarea {task.title}</p>
           <FontAwesomeIcon
             icon={faClose}
             className={styles.icon}
@@ -46,14 +68,8 @@ const CreateTaskForm: React.FC<Props> = ({ open, closeTask }) => {
           />
         </div>
         <Formik
-          initialValues={{
-            title: "",
-            due_date: "",
-            description: "",
-            comments: "",
-            tags: "",
-            is_completed: "0",
-          }}
+          enableReinitialize={true}
+          initialValues={initialValues}
           validationSchema={Yup.object({
             title: Yup.string().required("Este campo es obligatorio"),
             due_date: Yup.string(),
@@ -74,7 +90,7 @@ const CreateTaskForm: React.FC<Props> = ({ open, closeTask }) => {
             params.append("tags", values.tags || "");
             params.append("token", "ricardo_mm");
 
-            createTask(params);
+            editTask(params);
             resetForm();
             closeTask();
 
@@ -112,6 +128,7 @@ const CreateTaskForm: React.FC<Props> = ({ open, closeTask }) => {
                   withHelper={undefined}
                   textHelper={undefined}
                 />
+
                 <Input name="tags" label="Etiquetas" />
                 <BooleanRadio label="¿Está completada?" name="is_completed" />
                 <div className={styles.modalAddTaskContainer__form__actions}>
@@ -119,7 +136,7 @@ const CreateTaskForm: React.FC<Props> = ({ open, closeTask }) => {
                     Cancelar
                   </button>
                   <button type="submit" className={styles.btnAdd}>
-                    Crear
+                    Guardar
                   </button>
                 </div>
               </div>
@@ -131,4 +148,4 @@ const CreateTaskForm: React.FC<Props> = ({ open, closeTask }) => {
   );
 };
 
-export default CreateTaskForm;
+export default EditTaskForm;
