@@ -1,10 +1,9 @@
 import axios from "axios";
 
 const api = axios.create({
-  credentials: true,
-  baseURL: `${process.env.BASE_API_URL}`,
+  baseURL: `${process.env.NEXT_PUBLIC_BASE_API_URL}`,
   headers: {
-    Authorization: `Bearer ${process.env.TOKEN}`,
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
   },
   params: {
     token: "ricardo_mm",

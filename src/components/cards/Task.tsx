@@ -70,15 +70,11 @@ const Task: React.FC<Props> = ({ title, dueDate, isComplete, id }) => {
     params.append("tags", singleTask.tags || "");
     params.append("is_completed", `${singleTask.is_completed ? "0" : "1"}`);
     if (singleTask.due_date) params.append("due_date", singleTask.due_date);
-    await api.put(
-      `https://ecsdevapi.nextline.mx/vdev/tasks-challenge/tasks/${singleTask.id}`,
-      params,
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
+    await api.put(`/${singleTask.id}`, params, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
     router.push("/");
     setTimeout(() => {
       setLoading(false);
@@ -91,9 +87,9 @@ const Task: React.FC<Props> = ({ title, dueDate, isComplete, id }) => {
         setClickMenu && setClickMenu(false);
       }
     };
-    api.defaults.headers.authorization = `Bearer e864a0c9eda63181d7d65bc73e61e3dc6b74ef9b82f7049f1fc7d9fc8f29706025bd271d1ee1822b15d654a84e1a0997b973a46f923cc9977b3fcbb064179ecd`;
+
     api
-      .get(`https://ecsdevapi.nextline.mx/vdev/tasks-challenge/tasks/${id}`)
+      .get(`/${id}`)
       .then((res: any) => {
         setSingleTask(res[0]);
       })

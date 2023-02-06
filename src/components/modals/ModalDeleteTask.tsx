@@ -14,9 +14,7 @@ const ModalSeeTask: React.FC<Props> = ({ open, closeModal, id }) => {
   const router = useRouter();
 
   const handleDelete = async () => {
-    await api.delete(
-      `https://ecsdevapi.nextline.mx/vdev/tasks-challenge/tasks/${id}`
-    );
+    await api.delete(`/${id}`);
 
     router.push("/");
   };

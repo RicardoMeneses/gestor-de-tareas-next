@@ -7,6 +7,7 @@ import TextArea from "@/components/utils/forms/TextArea";
 import BooleanRadio from "@/components/utils/forms/BooleanRadio";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/router";
 
 interface Props {
   open?: boolean;
@@ -14,6 +15,10 @@ interface Props {
 }
 
 const CreateTaskForm: React.FC<Props> = ({ open, closeTask }) => {
+  const router = useRouter();
+  const createTaks = (params: any) => {
+    api.post("/?token=ricardo_mm", params);
+  };
   return (
     <div
       className={`${styles.modalAddTaskContainer} ${open ? styles.open : ""}`}
@@ -46,7 +51,19 @@ const CreateTaskForm: React.FC<Props> = ({ open, closeTask }) => {
           })}
           onSubmit={async (values, { setSubmitting }) => {
             setSubmitting(true);
-            console.log(values);
+            const params = new URLSearchParams();
+
+            params.append("title", values.title);
+            params.append("description", values.description || "");
+            params.append("comments", values.comments || "");
+            if (values.due_date) params.append("due_date", values.due_date);
+            params.append("is_completed", `${values.is_completed}`);
+            params.append("tags", values.tags || "");
+            params.append("token", "ricardo_mm");
+
+            createTaks(params);
+
+            router.push("/");
           }}
         >
           {(formik) => (

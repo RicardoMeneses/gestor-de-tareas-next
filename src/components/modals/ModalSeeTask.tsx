@@ -40,10 +40,12 @@ const ModalSeeTask: React.FC<Props> = ({ open, task, closeModal }) => {
         </div>
         <p>{task.description}</p>
         <p className={styles.modalTaskContainer__comments}>
-          <b>Comentarios: </b>
-          {task.comments}
+          <b>Comentarios:</b> {""}
+          {task.comments || "Sin comentarios"}
         </p>
-        <p className={styles.modalTaskContainer__tags}>{task.tags}</p>
+        {task.tags && (
+          <p className={styles.modalTaskContainer__tags}>{task.tags}</p>
+        )}
       </div>
     </div>
   );
